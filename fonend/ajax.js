@@ -31,6 +31,34 @@ function getAll(){
 
 }
 getAll();
+function create() {
+    event.preventDefault();
+    let name = $("#name").val();
+    let country = $("#country").val();
+    let area = $("#area").val();
+    let population = $("#population").val();
+    let gdp = $("#gdp").val();
+    let description = $("#description").val();
+    let newCity = {
+        "name": name,
+        "country": country,
+        "area": area,
+        "population": population,
+        "gdp": gdp,
+        "description": description
+    }
+    $.ajax({
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        type: "POST",
+        url: "http://localhost:8080/city/createCity",
+        data: JSON.stringify(newCity),
+        success: getAll(),
+
+    })
+}
 function deleteFormCity(id){
     $.ajax({
         url:"http://localhost:8080/findById"+id,
@@ -63,6 +91,34 @@ function editForm(id){
             window.location.href = "../fonend/edit.html"+queryString;
         }
     })
-}function edit(id){
+}
+function edit() {
+    event.preventDefault();
+    let id = $("#id").val();
+    let name = $("#name-edit").val();
+    let country = $("#country-edit").val();
+    let area = $("#area-edit").val();
+    let population = $("#population-edit").val();
+    let gdp = $("#gdp-edit").val();
+    let description = $("#description-edit").val();
+    let newCity = {
+        "name": name,
+        "country": country,
+        "area": area,
+        "population": population,
+        "gdp": gdp,
+        "description": description
+    }
+    $.ajax({
+        type: "PUT",
+        url: "http://localhost:8080/city/findById" + id,
+        dataType: "json",
+        data: JSON.stringify(newCity),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        success: getAll()
 
+    });
 }
